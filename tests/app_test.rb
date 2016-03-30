@@ -8,6 +8,10 @@ require './app'
 class AppTest < Minitest::Test
   include Rack::Test::Methods
 
+  def setup
+    Tweet.delete_all
+  end
+
   def app
     Sinatra::Application
   end
@@ -26,6 +30,6 @@ class AppTest < Minitest::Test
     tweet = Tweet.create(body: "Hello Taco!")
     response = get "/tweets"
     json = JSON.parse(response.body)
-    assert_equal tweet.body, json["body"]
+    assert_equal tweet.body, json.last["body"]
   end
 end
