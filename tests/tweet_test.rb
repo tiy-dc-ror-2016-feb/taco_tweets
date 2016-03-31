@@ -9,16 +9,6 @@ ActiveRecord::Base.establish_connection(
   database: 'test.sqlite3'
 )
 
-require './migration'
-
-
-# Down fails to start cause no tables
-begin
-  UserAndTweetMigration.migrate(:down)
-rescue
-end
-UserAndTweetMigration.migrate(:up)
-
 class TweetTest < Minitest::Test
 
   def test_tweet_exists

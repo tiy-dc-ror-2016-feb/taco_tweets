@@ -1,25 +1,48 @@
+ENV["RACK_ENV"] = ENV["ENV"] || "development"
 require 'sinatra'
 require 'json'
+require 'yaml'
 require 'active_record'
-require './tweet'
+require './lib/taco_tweet'
+require 'pry'
 
-ActiveRecord::Base.establish_connection(
-  adapter: 'sqlite3',
-  database: 'db.sqlite3'
-)
+config_file = File.read "./db/database.yml"
+config = YAML.load config_file
 
-require './migration'
+ActiveRecord::Base.establish_connection(config[ENV["RACK_ENV"]])
 
-# UserAndTweetMigration.migrate(:up)
+ActiveRecord::Migration.verbose = false
 
+helpers do
+  def current_user
+    TacoTweet::User.where(password: request.env["HTTP_X_TACO_TOKEN"]).first
+  end
+
+  def halt_unless_user
+    halt 401, {msg: "go away!"}.to_json unless current_user
+  end
+end
+
+
+post '/login' do
+  payload = JSON.parse(request.body.read)
+  unless payload["password"] == "taco"
+    halt 401, {msg: "go away!"}.to_json
+  end
+  token = SecureRandom.hex
+  TacoTweet::User.create(password: token)
+  {token: token}.to_json
+end
 
 get '/tweets' do
-  tweets = Tweet.all
+  halt_unless_user
+
+  tweets = TacoTweet::Tweet.all
 
   [200, tweets.to_json]
 end
 
 post '/tweets' do
   payload = JSON.parse(request.body.read)
-  Tweet.create(payload).to_json
+  TacoTweet::Tweet.create(payload).to_json
 end
