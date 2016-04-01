@@ -23,12 +23,7 @@ helpers do
   end
 end
 
-
 post '/login' do
-  payload = JSON.parse(request.body.read)
-  unless payload["password"] == "taco"
-    halt 401, {msg: "go away!"}.to_json
-  end
   token = SecureRandom.hex
   TacoTweet::User.create(password: token)
   {token: token}.to_json
