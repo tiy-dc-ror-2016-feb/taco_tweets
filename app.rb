@@ -26,18 +26,19 @@ end
 post '/login' do
   token = SecureRandom.hex
   TacoTweet::User.create(password: token)
-  {token: token}.to_json
+  [201, { token: token }.to_json]
 end
 
 get '/tweets' do
   halt_unless_user
 
   tweets = TacoTweet::Tweet.all
-
   [200, tweets.to_json]
 end
 
 post '/tweets' do
+  halt_unless_user
+
   payload = JSON.parse(request.body.read)
-  TacoTweet::Tweet.create(payload).to_json
+  [201, TacoTweet::Tweet.create(payload).to_json]
 end
