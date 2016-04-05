@@ -1,8 +1,4 @@
 ENV["RACK_ENV"] = ENV["ENV"] || "development"
-require "sinatra/base"
-require "json"
-require "yaml"
-require "active_record"
 require "./lib/taco_tweet"
 require "pry"
 
@@ -13,4 +9,4 @@ ActiveRecord::Base.establish_connection(config[ENV["RACK_ENV"]])
 
 ActiveRecord::Migration.verbose = false
 
-TacoTweet::Server.run!
+Pry.start

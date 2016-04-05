@@ -34,13 +34,13 @@ class AppTest < Minitest::Test
   end
 
   def test_gets_tweets_will_send_401_if_unauthorized
-    response = get "/tweets"
+    response = get "/api/tweets"
     json = JSON.parse(response.body)
     assert_equal 401, response.status
   end
 
   def test_gets_tweets_will_tell_someone_to_go_away
-    response = get "/tweets"
+    response = get "/api/tweets"
     json = JSON.parse(response.body)
     assert_equal({ "msg" => "go away!" }, json)
   end
@@ -48,7 +48,7 @@ class AppTest < Minitest::Test
   def test_get_returns_empty_json_when_no_taco_tweet
     stub_session
 
-    response = get "/tweets"
+    response = get "/api/tweets"
     json = JSON.parse(response.body)
     assert_equal [], json
   end
@@ -57,7 +57,7 @@ class AppTest < Minitest::Test
     stub_session
 
     tweet = TacoTweet::Tweet.create(body: "Hello Taco!")
-    response = get "/tweets"
+    response = get "/api/tweets"
     json = JSON.parse(response.body)
     assert_equal tweet.body, json.last["body"]
   end

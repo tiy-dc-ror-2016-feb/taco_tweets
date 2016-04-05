@@ -3,7 +3,7 @@ require "minitest/autorun"
 require "rack/test"
 require "pry"
 
-require "./app"
+require "./lib/taco_tweet"
 
 ActiveRecord::Base.establish_connection(
   adapter: "sqlite3",
