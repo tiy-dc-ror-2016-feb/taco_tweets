@@ -1,25 +1,67 @@
-h1 {
-  color: red;
+/* Structure */
+.wrapper {
+  width: 800px;
+  heigh: 100%;
+  margin:0 auto;
+  padding-bottom: 10px;
 }
 
+body {
+  margin:0;
+  padding:0;
+}
+
+header{
+  margin: 0 10px;
+}
+
+header h1 {
+  margin-top: 0px;
+  padding-top: 10px;
+}
+
+.tweet-form {
+  padding: 30px;
+}
+
+.tweet-form input{
+  width:100%;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+/* Fonts & Colors */
+h1 {
+  font-family: sans-serif;
+}
+
+body{
+  background-color: rgb(228, 198, 10);
+}
+
+.wrapper {
+  background-color: #eee;
+  box-shadow: 0em 0em 0em .05em #A2A2A2, 0 0 0 .25em #C0C0C0, 0em 0em 0em .3em #FFFFFF, 0 0 0 .37em #666666, 0 0 0 .42em #E6E6E6;
+}
+
+header {
+    border-bottom: 1px solid #ddd;
+}
+
+/* Epic Button */
+
 #tweet-btn {
-  font-size: 3rem;
   font-family: Arial;
   color: #555555;
   padding: .9rem 2rem .9rem;
-  margin: 0rem 5rem;
   background-color: #B1B1B1;
   border: 3px solid #868686;
   box-shadow: 0em 0em 0em .05em #A2A2A2, 0 0 0 .25em #C0C0C0, 0em 0em 0em .3em #FFFFFF, 0 0 0 .37em #666666, 0 0 0 .42em #E6E6E6, inset 0em 1em .1em .05em #DDDDDD;
   border-radius: 10px;
-  margin-top: 20px;
-  position: absolute;
+  display: block;
 }
-#tweet-btn::before {
-  content: "★  ";
-  color: #888888;
-}
-#tweet-btn::after {
-  content: "  ★";
+#tweet-btn::before, #tweet-btn::after {
+  content: "🌮";
+  margin: 0 10px;
   color: #888888;
 }
