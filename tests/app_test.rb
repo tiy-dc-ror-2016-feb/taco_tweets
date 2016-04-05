@@ -1,9 +1,9 @@
 ENV["RACK_ENV"] = "test"
-require 'minitest/autorun'
-require 'rack/test'
-require 'pry'
+require "minitest/autorun"
+require "rack/test"
+require "pry"
 
-require './app'
+require "./app"
 
 class AppTest < Minitest::Test
   include Rack::Test::Methods
@@ -13,7 +13,7 @@ class AppTest < Minitest::Test
   end
 
   def app
-    Sinatra::Application
+    TacoTweet::Server
   end
 
   def stub_session
@@ -26,16 +26,14 @@ class AppTest < Minitest::Test
     assert true
   end
 
-
-
   def test_login_returns_token
-    response = post '/login'
+    response = post "/login"
     json_body = JSON.parse(response.body)
-    assert_equal true, json_body.has_key?("token")
+    assert_equal true, json_body.key?("token")
   end
 
   def test_login_returns_token_of_specifed_length
-    response = post '/login'
+    response = post "/login"
     json_body = JSON.parse(response.body)
     assert_equal 32, json_body["token"].size
   end
@@ -49,7 +47,7 @@ class AppTest < Minitest::Test
   def test_gets_tweets_will_tell_someone_to_go_away
     response = get "/tweets"
     json = JSON.parse(response.body)
-    assert_equal({"msg" => "go away!"}, json)
+    assert_equal({ "msg" => "go away!" }, json)
   end
 
   def test_get_returns_empty_json_when_no_taco_tweet
