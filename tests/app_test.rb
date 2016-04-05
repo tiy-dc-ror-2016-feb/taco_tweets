@@ -1,9 +1,4 @@
-ENV["RACK_ENV"] = "test"
-require "minitest/autorun"
-require "rack/test"
-require "pry"
-
-require "./app"
+require_relative "test_helper"
 
 class AppTest < Minitest::Test
   include Rack::Test::Methods

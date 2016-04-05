@@ -1,13 +1,4 @@
-ENV["RACK_ENV"] = "test"
-require "minitest/autorun"
-require "pry"
-
-require "./lib/taco_tweet"
-
-ActiveRecord::Base.establish_connection(
-  adapter: "sqlite3",
-  database: "test.sqlite3"
-)
+require_relative "test_helper"
 
 class TweetTest < Minitest::Test
   def test_tweet_exists
